@@ -1,0 +1,386 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Scenes/Options/Apply.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Options/OptionsMenu.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Options/Resume.gd" type="Script" id=3]
+[ext_resource path="res://Sprites/radio_off.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/arrow.png" type="Texture" id=5]
+[ext_resource path="res://Scenes/Options/Resolution.gd" type="Script" id=6]
+[ext_resource path="res://Scenes/Options/AspectRatio.gd" type="Script" id=7]
+[ext_resource path="res://Scenes/Options/DisplayMode.gd" type="Script" id=8]
+[ext_resource path="res://Fonts/hud_font.tres" type="DynamicFont" id=9]
+[ext_resource path="res://Scenes/Options/slider_filled.tres" type="StyleBox" id=10]
+[ext_resource path="res://Scenes/Options/slider.tres" type="StyleBox" id=11]
+[ext_resource path="res://Sprites/slider_grabber.png" type="Texture" id=12]
+[ext_resource path="res://Sprites/checkbox_filled.png" type="Texture" id=13]
+[ext_resource path="res://Scenes/Options/EnablePan.gd" type="Script" id=14]
+[ext_resource path="res://Scenes/Options/PanSpeed.gd" type="Script" id=15]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.180392, 0.180392, 0.203922, 1 )
+
+[node name="SettingsMenu" type="Panel"]
+margin_left = 159.868
+margin_top = 90.0
+margin_right = 1759.87
+margin_bottom = 990.0
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AspectRatio" type="Control" parent="."]
+margin_left = 43.0
+margin_top = 72.0
+margin_right = 83.0
+margin_bottom = 112.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="AspectRatio"]
+margin_right = 283.0
+margin_bottom = 45.0
+custom_fonts/font = ExtResource( 9 )
+text = "ASPECT RATIO:"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Clickable" type="OptionButton" parent="AspectRatio"]
+margin_left = 310.0
+margin_right = 560.0
+margin_bottom = 45.0
+focus_mode = 0
+custom_fonts/font = ExtResource( 9 )
+enabled_focus_mode = 0
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ArrowLeft" type="Sprite" parent="AspectRatio"]
+visible = false
+position = Vector2( 293, 22.5 )
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 5 )
+
+[node name="ArrowRight" type="Sprite" parent="AspectRatio"]
+visible = false
+position = Vector2( 575, 22.5 )
+rotation = 3.14159
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 5 )
+
+[node name="Resolution" type="Control" parent="."]
+margin_left = 646.554
+margin_top = 72.0
+margin_right = 686.554
+margin_bottom = 112.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Resolution"]
+margin_right = 283.0
+margin_bottom = 45.0
+custom_fonts/font = ExtResource( 9 )
+text = "RESOLUTION:"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Clickable" type="OptionButton" parent="Resolution"]
+margin_left = 280.0
+margin_right = 530.0
+margin_bottom = 45.0
+focus_mode = 0
+custom_fonts/font = ExtResource( 9 )
+enabled_focus_mode = 0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ArrowLeft" type="Sprite" parent="Resolution"]
+visible = false
+position = Vector2( 263, 21.5 )
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 5 )
+
+[node name="ArrowRight" type="Sprite" parent="Resolution"]
+visible = false
+position = Vector2( 545, 21.5 )
+rotation = -3.14159
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 5 )
+
+[node name="DisplayMode" type="Control" parent="."]
+margin_left = 43.0
+margin_top = 144.0
+margin_right = 83.0
+margin_bottom = 184.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="DisplayMode"]
+margin_right = 283.0
+margin_bottom = 39.0
+custom_fonts/font = ExtResource( 9 )
+text = "DISPLAY MODE:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Windowed" type="Control" parent="DisplayMode"]
+margin_left = 315.0
+margin_right = 355.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Clickable" type="Button" parent="DisplayMode/Windowed"]
+margin_right = 1767.0
+margin_bottom = 262.0
+rect_scale = Vector2( 0.148, 0.148 )
+focus_mode = 0
+enabled_focus_mode = 0
+icon = ExtResource( 4 )
+flat = true
+script = ExtResource( 8 )
+
+[node name="Label" type="Label" parent="DisplayMode/Windowed"]
+margin_left = 46.945
+margin_right = 256.945
+margin_bottom = 39.0
+custom_fonts/font = ExtResource( 9 )
+text = "Windowed"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Fullscreen" type="Control" parent="DisplayMode"]
+margin_left = 600.0
+margin_right = 640.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Clickable" type="Button" parent="DisplayMode/Fullscreen"]
+margin_right = 1949.0
+margin_bottom = 262.0
+rect_scale = Vector2( 0.148, 0.148 )
+focus_mode = 0
+enabled_focus_mode = 0
+icon = ExtResource( 4 )
+flat = true
+script = ExtResource( 8 )
+display_mode_id = 1
+
+[node name="Label" type="Label" parent="DisplayMode/Fullscreen"]
+margin_left = 47.0
+margin_right = 282.0
+margin_bottom = 39.0
+custom_fonts/font = ExtResource( 9 )
+text = "Fullscreen"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Borderless" type="Control" parent="DisplayMode"]
+margin_left = 870.0
+margin_right = 910.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Clickable" type="Button" parent="DisplayMode/Borderless"]
+margin_right = 1983.0
+margin_bottom = 262.0
+rect_scale = Vector2( 0.148, 0.148 )
+focus_mode = 0
+enabled_focus_mode = 0
+icon = ExtResource( 4 )
+flat = true
+script = ExtResource( 8 )
+display_mode_id = 2
+
+[node name="Label" type="Label" parent="DisplayMode/Borderless"]
+margin_left = 46.945
+margin_right = 256.945
+margin_bottom = 39.0
+custom_fonts/font = ExtResource( 9 )
+text = "Borderless"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EdgePan" type="Control" parent="."]
+margin_left = 43.0
+margin_top = 216.0
+margin_right = 83.0
+margin_bottom = 256.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Enable" type="Control" parent="EdgePan"]
+margin_left = 230.0
+margin_right = 270.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="EdgePan/Enable"]
+margin_left = -230.0
+margin_right = -36.0
+margin_bottom = 39.0
+custom_fonts/font = ExtResource( 9 )
+text = "EDGE PAN:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Clickable" type="Button" parent="EdgePan/Enable"]
+margin_right = 1767.0
+margin_bottom = 262.0
+rect_scale = Vector2( 0.148, 0.148 )
+focus_mode = 0
+enabled_focus_mode = 0
+icon = ExtResource( 13 )
+flat = true
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="EdgePan/Enable"]
+margin_left = 50.0
+margin_right = 260.0
+margin_bottom = 39.0
+custom_fonts/font = ExtResource( 9 )
+text = "Enabled"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Speed" type="Control" parent="EdgePan"]
+anchor_left = -3.8147e-07
+margin_left = 720.808
+margin_right = 760.808
+margin_bottom = 40.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="EdgePan/Speed"]
+anchor_left = 1.101
+anchor_top = 9.913
+anchor_right = 1.101
+anchor_bottom = 9.913
+margin_left = -292.848
+margin_top = -396.52
+margin_right = -76.848
+margin_bottom = -357.52
+custom_fonts/font = ExtResource( 9 )
+text = "PAN SPEED:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Clickable" type="HSlider" parent="EdgePan/Speed"]
+anchor_left = 8.982
+anchor_top = 2.643
+anchor_right = 8.982
+anchor_bottom = 2.643
+margin_left = -359.28
+margin_top = -103.72
+margin_right = 210.72
+margin_bottom = -67.72
+custom_icons/grabber_highlight = ExtResource( 12 )
+custom_icons/grabber = ExtResource( 12 )
+custom_styles/slider = ExtResource( 11 )
+custom_styles/grabber_area_highlight = ExtResource( 10 )
+custom_styles/grabber_area = ExtResource( 10 )
+max_value = 4.0
+step = 0.01
+script = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="EdgePan/Speed"]
+anchor_left = 1.101
+anchor_top = 9.913
+anchor_right = 1.101
+anchor_bottom = 9.913
+margin_left = 535.96
+margin_top = -396.52
+margin_right = 558.96
+margin_bottom = -357.52
+custom_fonts/font = ExtResource( 9 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Apply" type="Control" parent="."]
+margin_left = 356.0
+margin_top = 780.0
+margin_right = 396.0
+margin_bottom = 820.0
+
+[node name="Clickable" type="Button" parent="Apply"]
+margin_right = 285.0
+margin_bottom = 81.0
+custom_fonts/font = ExtResource( 9 )
+text = "APPLY"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Resume" type="Control" parent="."]
+margin_left = 43.0
+margin_top = 780.0
+margin_right = 83.0
+margin_bottom = 820.0
+
+[node name="Clickable" type="Button" parent="Resume"]
+margin_right = 285.0
+margin_bottom = 81.0
+custom_fonts/font = ExtResource( 9 )
+text = "RESUME"
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SuccessLabel" type="Label" parent="."]
+margin_left = 1034.96
+margin_top = 780.0
+margin_right = 1526.96
+margin_bottom = 861.0
+grow_horizontal = 0
+custom_fonts/font = ExtResource( 9 )
+text = "Settings applied successfully!"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
