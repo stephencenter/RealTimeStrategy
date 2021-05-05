@@ -65,7 +65,7 @@ func process_selected_unit_pointer():
     var world_rect = the_game.get_visible_world_rect()
     var r_topleft = world_rect[0]
     var r_botright = world_rect[1]
-    var target_pos = the_game.get_player_global_position()
+    var target_pos = Vector2.ZERO
     var pointer_zone = (r_botright - r_topleft).y*0.03
     
     if the_game.does_rect_contain_point(r_topleft, r_botright, target_pos):

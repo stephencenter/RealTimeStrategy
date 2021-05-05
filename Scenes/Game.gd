@@ -3,17 +3,13 @@ extends Node2D
 onready var interface : CanvasLayer = $Interface
 onready var object_container : Node = $ObjectContainer
 onready var options_menu : Node = $Interface/Centered/OptionsMenu
-onready var player_scene = load("res://Scenes/Ingame/Player.tscn")
+onready var camera : Camera2D = $Camera2D
 
 var start_time : int = 0
-var the_player : Node2D = null
 var state_path : Array = []
 enum GameState {TITLESCREEN=0, INGAME=1, OPTIONS=2}
 
-# Update
-func _ready():
-    start_new_game()
-    
+# Updates
 func _process(delta):
     if state_path.empty():
         state_path = [GameState.TITLESCREEN]
@@ -28,7 +24,6 @@ func _process(delta):
         options_process(delta)
 
 func titlescreen_process(_delta):
-    start_new_game()
     advance_game_state(GameState.INGAME)
     
 func ingame_process(_delta):        
@@ -40,41 +35,8 @@ func options_process(_delta):
     if Input.is_action_just_pressed("pause"):
         interface.close_options_menu()
         revert_game_state()
-    
-func start_new_game():
-    # Generate new RNG seed
-    randomize()
-     
-    # Clear objects
-    for object in object_container.get_children():
-        object_container.remove_child(object)
-    
-    # Spawn Player
-    the_player = player_scene.instance()
-    the_player.global_position = get_viewport().get_visible_rect().size/2
-    add_new_object(the_player)
-    
-    # Get the time the game started
-    start_time = OS.get_unix_time()
 
-# Helpers
-func get_player():
-    return the_player
-
-func get_player_global_position():
-    # Returns the position of the player relative to the world origin
-    if the_player != null:
-        return get_player().global_position
-        
-    return Vector2.ZERO
-    
-func get_player_screen_position():
-    # Returns the position of the player relative to the top-left corner of the screen
-    if the_player != null:
-        return get_player().get_global_transform_with_canvas().origin
-        
-    return Vector2.ZERO
-    
+# Helpers    
 func get_cursor_screen_position():
     return get_global_mouse_position() - get_visible_world_rect()[0]
 
@@ -83,14 +45,17 @@ func get_visible_world_rect() -> Array:
     # corners of the visible world space as an array.
     # index 0 is top-left, index 1 is bot-right
     var screen_size = get_viewport().get_visible_rect().size
-    var player_pos = get_player_global_position()
-    var screen_pos = get_player_screen_position()
-    var top_left = player_pos - screen_pos
+    var top_left = camera.offset - screen_size/2
     var bot_right = top_left + screen_size
     
     return [top_left, bot_right]
     
-func does_rect_contain_point(r_topleft, r_botright, point) -> bool:
+func does_rect_contain_point(rect_p1 : Vector2, rect_p2 : Vector2, point : Vector2) -> bool:
+    # rect_p1 and rect_p2 must be opposite corners of a rectangle,
+    # i.e. top-left and bot-right, or top-right and bot-left
+    var r_topleft = Vector2(min(rect_p1.x, rect_p2.x), min(rect_p1.y, rect_p2.y))
+    var r_botright = Vector2(max(rect_p1.x, rect_p2.x), max(rect_p1.y, rect_p2.y))
+    
     if point.x < r_topleft.x or point.x > r_botright.x:
         return false
         
@@ -102,6 +67,15 @@ func does_rect_contain_point(r_topleft, r_botright, point) -> bool:
 func is_object_on_screen(object) -> bool:
     var world_rect =  get_visible_world_rect()    
     return does_rect_contain_point(world_rect[0], world_rect[1], object.global_position)
+    
+func get_objects_in_rect(rect_p1, rect_p2) -> Array:
+    var objects_in_rect : Array = []
+    
+    for object in object_container.get_children():
+        if does_rect_contain_point(rect_p1, rect_p2, object.global_position):
+            objects_in_rect.append(object)
+            
+    return objects_in_rect
     
 func add_new_object(var the_object):
     object_container.add_child(the_object)

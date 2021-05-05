@@ -6,7 +6,7 @@ var SETTINGS : Dictionary = {
     "resolution_x": 1600,
     "resolution_y": 900,
     "display_mode": 0,
-    "pan_enabled": true,
+    "pan_enabled": false,
     "pan_speed": 1.0
 }       
 
