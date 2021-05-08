@@ -55,11 +55,9 @@ func align_ui_elements():
 
 func enable_joystick_cursor():
     Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-    the_game.get_player().joy_crosshair.visible = true
     
 func enable_mouse_cursor():
     Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-    the_game.get_player().joy_crosshair.visible = false
     
 func process_selected_unit_pointer():
     var world_rect = the_game.get_visible_world_rect()

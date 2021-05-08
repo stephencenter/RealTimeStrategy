@@ -77,6 +77,15 @@ func get_objects_in_rect(rect_p1, rect_p2) -> Array:
             
     return objects_in_rect
     
+func get_objects_in_radius(point : Vector2, radius : float) -> Array:
+    var objects_in_rect : Array = []
+    
+    for object in object_container.get_children():
+        if object.global_position.distance_to(point) <= radius:
+            objects_in_rect.append(object)
+            
+    return objects_in_rect
+    
 func add_new_object(var the_object):
     object_container.add_child(the_object)
     

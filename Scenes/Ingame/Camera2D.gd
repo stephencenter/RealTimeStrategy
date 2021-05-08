@@ -22,10 +22,6 @@ func _process(delta):
         offset += (previous_mousepos - new_mousepos)
         new_mousepos += (previous_mousepos - new_mousepos)
         
-    elif Input.is_action_pressed("reset_camera"):
-        offset.x = 0
-        offset.y = 0
-        
     elif config.get_setting("pan_enabled"):
         camera_edge_pan(delta)
     
