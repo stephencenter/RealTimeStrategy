@@ -7,14 +7,35 @@ onready var ACTIVE_STATES : Array = [the_game.GameState.INGAME]
 var selected_units : Array = []
 var select_point_one
 var select_point_two
-
+ 
 # Updates
 func _process(_delta):
     if not the_game.is_any_current_state(ACTIVE_STATES):
         return
            
     update()
-
+        
+func _input(_event):
+    if not the_game.is_any_current_state(ACTIVE_STATES):
+        return
+        
+    if Input.is_action_pressed("drag_select") or Input.is_action_just_released("drag_select"):
+        action_drag_select()
+    
+    if Input.is_action_just_pressed("move_or_attack"):
+        var target_position = get_global_mouse_position()
+        
+        for unit in selected_units:
+            if Input.is_action_pressed("queue_actions"):
+                unit.action_list.append(["move", target_position], selected_units)
+                
+            else:
+                unit.action_list = [["move", target_position, selected_units]]
+                
+    if Input.is_action_just_pressed("cancel_action"):
+        for unit in selected_units:
+            unit.action_list = []
+                
 func _draw():
     var box_color : Color = Color(0, 0.5, 1, 1)
     var hover_select_color : Color = Color(0, 0.5, 1, 0.5)
@@ -41,10 +62,6 @@ func _draw():
 func draw_empty_circle(position : Vector2, radius : float, color : Color, width : float):
     draw_arc(position, radius, 0, PI, 360, color, width, true)
     draw_arc(position, radius, PI, 2*PI, 360, color, width, true)
-        
-func _input(_event):
-    if Input.is_action_pressed("drag_select") or Input.is_action_just_released("drag_select"):
-        action_drag_select()
     
 func get_units_in_selection_box() -> Array:
     var new_units : Array = the_game.get_objects_in_rect(select_point_one, select_point_two)

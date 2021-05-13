@@ -4,16 +4,14 @@ onready var interface : CanvasLayer = $Interface
 onready var object_container : Node = $ObjectContainer
 onready var options_menu : Node = $Interface/Centered/OptionsMenu
 onready var camera : Camera2D = $Camera2D
+onready var unit_class = load("res://Scenes/Unit.gd")
 
 var start_time : int = 0
 var state_path : Array = []
 enum GameState {TITLESCREEN=0, INGAME=1, OPTIONS=2}
 
 # Updates
-func _process(delta):
-    if state_path.empty():
-        state_path = [GameState.TITLESCREEN]
-    
+func _process(delta):    
     if is_current_state(GameState.TITLESCREEN):
         titlescreen_process(delta)
         
@@ -72,6 +70,9 @@ func get_objects_in_rect(rect_p1, rect_p2) -> Array:
     var objects_in_rect : Array = []
     
     for object in object_container.get_children():
+        if not object is unit_class:
+            continue
+            
         if does_rect_contain_point(rect_p1, rect_p2, object.global_position):
             objects_in_rect.append(object)
             
@@ -81,6 +82,9 @@ func get_objects_in_radius(point : Vector2, radius : float) -> Array:
     var objects_in_rect : Array = []
     
     for object in object_container.get_children():
+        if not object is unit_class:
+            continue
+            
         if object.global_position.distance_to(point) <= radius:
             objects_in_rect.append(object)
             
@@ -90,6 +94,9 @@ func add_new_object(var the_object):
     object_container.add_child(the_object)
     
 func get_current_state() -> int:
+    if state_path.empty():
+        state_path = [GameState.INGAME]
+        
     return state_path.back()
     
 func is_current_state(state : int) -> bool:

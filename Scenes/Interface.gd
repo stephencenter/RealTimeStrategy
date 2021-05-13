@@ -3,7 +3,6 @@ extends CanvasLayer
 onready var the_game = get_tree().get_root().get_node("Game")
 onready var options_menu = $Centered/OptionsMenu
 onready var config = get_tree().get_root().get_node("Game/SettingsManager")
-onready var background : TextureRect = get_tree().get_root().get_node("Game/Background/Sprite")
 onready var camera : Camera2D = get_tree().get_root().get_node("Game/Camera2D")
 var time_when_paused : int = 0
 
@@ -60,10 +59,11 @@ func enable_mouse_cursor():
     Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
     
 func process_selected_unit_pointer():
+    var jellybelly = the_game.get_node("ObjectContainer/Jellybelly")
     var world_rect = the_game.get_visible_world_rect()
     var r_topleft = world_rect[0]
     var r_botright = world_rect[1]
-    var target_pos = Vector2.ZERO
+    var target_pos = jellybelly.global_position
     var pointer_zone = (r_botright - r_topleft).y*0.03
     
     if the_game.does_rect_contain_point(r_topleft, r_botright, target_pos):
