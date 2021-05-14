@@ -27,14 +27,14 @@ func _input(_event):
         
         for unit in selected_units:
             if Input.is_action_pressed("queue_actions"):
-                unit.action_list.append(["move", target_position], selected_units)
+                unit.action_queue.append(["move", target_position, selected_units])
                 
             else:
-                unit.action_list = [["move", target_position, selected_units]]
+                unit.action_queue = [["move", target_position, selected_units]]
                 
     if Input.is_action_just_pressed("cancel_action"):
         for unit in selected_units:
-            unit.action_list = []
+            unit.action_queue = []
                 
 func _draw():
     var box_color : Color = Color(0, 0.5, 1, 1)
